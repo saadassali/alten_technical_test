@@ -16,17 +16,19 @@ public class ProductMapper {
 
         Product product = new Product();
         product.setName(dto.getName());
+        product.setCode(dto.getCode());
+        product.setQuantity(dto.getQuantity());
         product.setDescription(dto.getDescription());
         product.setCategory(dto.getCategory());
         product.setPrice(dto.getPrice());
         
         // Set default values
-        product.setQuantity(0);
-        product.setInternalReference(null);
-        product.setShellId(null);
-        product.setInventoryStatus(null);
-        product.setRating(0);
-        product.setImage(null);
+        product.setQuantity(dto.getQuantity());
+        product.setInternalReference(dto.getInternalReference());
+        product.setShellId(dto.getShellId());
+        product.setInventoryStatus(dto.getInventoryStatus());
+        product.setRating(dto.getRating());
+        product.setImage(dto.getImage());
         product.setCreatedAt(LocalDateTime.now());
         product.setUpdatedAt(LocalDateTime.now());
 
