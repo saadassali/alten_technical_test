@@ -8,14 +8,14 @@ import { catchError, Observable, of, tap } from "rxjs";
 }) export class ProductsService {
 
     private readonly http = inject(HttpClient);
-    private readonly path = "/api/products";
+    private readonly path = "http://localhost:8080/api/products";
 
     private readonly _products = signal<Product[]>([]);
 
     public readonly products = this._products.asReadonly();
 
     public get(): Observable<Product[]> {
-        return this.http.get<Product[]>("http://localhost:8080"+this.path).pipe(
+        return this.http.get<Product[]>(this.path).pipe(
             catchError((error) => {
                 return this.http.get<Product[]>("assets/products.json");
             }),
@@ -33,6 +33,7 @@ import { catchError, Observable, of, tap } from "rxjs";
     }
 
     public update(product: Product): Observable<boolean> {
+      console.log("hello")
         return this.http.patch<boolean>(`${this.path}/${product.id}`, product).pipe(
             catchError(() => {
                 return of(true);

@@ -1,5 +1,6 @@
 package com.altev.ecommerce.controller;
 
+import com.altev.ecommerce.dto.ProductDTO;
 import com.altev.ecommerce.entity.Product;
 import com.altev.ecommerce.service.ProductService;
 import org.springframework.http.ResponseEntity;
@@ -30,13 +31,13 @@ public class ProductController {
 
     @PostMapping
 //    @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+    public ResponseEntity<Product> createProduct(@RequestBody ProductDTO product) {
         return ResponseEntity.ok(productService.saveProduct(product));
     }
 
     @PatchMapping("/{id}")
 //    @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody ProductDTO product) {
         return productService.getProductById(id)
             .map(existingProduct -> {
                 product.setId(id);

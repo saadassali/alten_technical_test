@@ -1,8 +1,9 @@
 package com.altev.ecommerce.service;
 
 import com.altev.ecommerce.dao.ProductRepository;
+import com.altev.ecommerce.dto.ProductDTO;
 import com.altev.ecommerce.entity.Product;
-import lombok.RequiredArgsConstructor;
+import com.altev.ecommerce.mappers.ProductMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,8 +25,8 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-    public Product saveProduct(Product product) {
-        return productRepository.save(product);
+    public Product saveProduct(ProductDTO product) {
+        return productRepository.save(ProductMapper.dtoToEntity(product));
     }
 
     public void deleteProduct(Long id) {
