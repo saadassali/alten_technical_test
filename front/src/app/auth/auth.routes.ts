@@ -1,11 +1,15 @@
-import { inject } from "@angular/core";
-import { ActivatedRouteSnapshot, Routes } from "@angular/router";
-import { ProductListComponent } from "./features/product-list/product-list.component";
+import {  Routes } from "@angular/router";
+import {SigninComponent} from "./signin/signin.component";
+import {SignupComponent} from "./signup/signup.component";
 
-export const PRODUCTS_ROUTES: Routes = [
+export const AUTH_ROUTES: Routes = [
 	{
-		path: "list",
-		component: ProductListComponent,
+		path: "signin",
+		component: SigninComponent,
 	},
-	{ path: "**", redirectTo: "list" },
+  {
+    path: "signup",
+    component: SignupComponent,
+  },
+	{ path: "**", redirectTo: "signin" },
 ];

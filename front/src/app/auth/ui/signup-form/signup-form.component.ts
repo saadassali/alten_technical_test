@@ -1,98 +1,124 @@
 import {
   Component,
-  computed,
   EventEmitter,
-  input,
   Output,
   ViewEncapsulation,
 } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { Product } from "app/products/data-access/product.model";
-import { SelectItem } from "primeng/api";
 import { ButtonModule } from "primeng/button";
-import { DropdownModule } from "primeng/dropdown";
-import { InputNumberModule } from "primeng/inputnumber";
 import { InputTextModule } from "primeng/inputtext";
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import { PasswordModule } from "primeng/password";
 
 @Component({
-  selector: "app-product-form",
+  selector: "app-signup-form",
   template: `
-    <form #form="ngForm" (ngSubmit)="onSave()">
+    <form #form="ngForm" (ngSubmit)="onSignup()">
       <div class="form-field">
-        <label for="name">Nom</label>
-        <input pInputText
+        <label for="firstname">Prénom</label>
+        <input
+          pInputText
           type="text"
-          id="name"
-          name="name"
-          [(ngModel)]="editedProduct().name"
-          required>
-      </div>
-      <div class="form-field">
-        <label for="price">Prix</label>
-        <p-inputNumber 
-          [(ngModel)]="editedProduct().price" 
-          name="price"
-          mode="decimal"
-          required/> 
-      </div>
-      <div class="form-field">
-        <label for="description">Description</label>
-        <textarea pInputTextarea 
-          id="description"
-          name="description"
-          rows="5" 
-          cols="30" 
-          [(ngModel)]="editedProduct().description">
-        </textarea>
-      </div>      
-      <div class="form-field">
-        <label for="description">Catégorie</label>
-        <p-dropdown 
-          [options]="categories" 
-          [(ngModel)]="editedProduct().category" 
-          name="category"
-          appendTo="body"
+          id="firstname"
+          name="firstname"
+          [(ngModel)]="firstname"
+          required
         />
       </div>
-      <div class="flex justify-content-between">
-        <p-button type="button" (click)="onCancel()" label="Annuler" severity="help"/>
-        <p-button type="submit" [disabled]="!form.valid" label="Enregistrer" severity="success"/>
+
+      <div class="form-field">
+        <label for="lastname">Nom</label>
+        <input
+          pInputText
+          type="text"
+          id="lastname"
+          name="lastname"
+          [(ngModel)]="lastname"
+          required
+        />
       </div>
+
+      <div class="form-field">
+        <label for="email">Email</label>
+        <input
+          pInputText
+          type="email"
+          id="email"
+          name="email"
+          [(ngModel)]="email"
+          required
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="password">Mot de passe</label>
+        <p-password
+          [(ngModel)]="password"
+          name="password"
+          id="password"
+          [toggleMask]="true"
+          required
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="confirmPassword">Confirmer le mot de passe</label>
+        <p-password
+          [(ngModel)]="confirmPassword"
+          name="confirmPassword"
+          id="confirmPassword"
+          [toggleMask]="true"
+          required
+        />
+      </div>
+
+      <div class="flex justify-content-between">
+        <p-button type="button" (click)="onCancel()" label="Annuler" severity="help" />
+        <p-button type="submit" [disabled]="!form.valid || passwordsDontMatch()" label="S'inscrire" severity="success" />
+      </div>
+      @if(passwordsDontMatch()){
+        <p  class="text-red-500 mt-2">
+          Les mots de passe ne correspondent pas.
+        </p>
+      }
+
     </form>
   `,
-  styleUrls: ["./product-form.component.scss"],
+  styleUrls: ["./signup-form.component.scss"],
   standalone: true,
   imports: [
     FormsModule,
     ButtonModule,
     InputTextModule,
-    InputNumberModule,
-    InputTextareaModule,
-    DropdownModule,
+    PasswordModule,
   ],
   encapsulation: ViewEncapsulation.None
 })
-export class ProductFormComponent {
-  public readonly product = input.required<Product>();
+export class SignupFormComponent {
+  public firstname: string = "";
+  public lastname: string = "";
+  public email: string = "";
+  public password: string = "";
+  public confirmPassword: string = "";
 
   @Output() cancel = new EventEmitter<void>();
-  @Output() save = new EventEmitter<Product>();
-
-  public readonly editedProduct = computed(() => ({ ...this.product() }));
-
-  public readonly categories: SelectItem[] = [
-    { value: "Accessories", label: "Accessories" },
-    { value: "Fitness", label: "Fitness" },
-    { value: "Clothing", label: "Clothing" },
-    { value: "Electronics", label: "Electronics" },
-  ];
+  @Output() signup = new EventEmitter<{ firstname: string; lastname: string; email: string; password: string }>();
 
   onCancel() {
     this.cancel.emit();
   }
 
-  onSave() {
-    this.save.emit(this.editedProduct());
+  onSignup() {
+    if (!this.passwordsDontMatch()) {
+      this.signup.emit({
+        firstname: this.firstname,
+        lastname: this.lastname,
+        email: this.email,
+        password: this.password
+      });
+    }
+  }
+
+  passwordsDontMatch(): boolean {
+    return this.password !== this.confirmPassword && this.password.length > 0 && this.confirmPassword.length > 0;
   }
 }

@@ -9,6 +9,7 @@ import { DialogModule } from 'primeng/dialog';
 import {FormsModule} from "@angular/forms";
 import {RatingModule} from "primeng/rating";
 import {NgClass} from "@angular/common";
+import {SignupFormComponent} from "../ui/signup-form/signup-form.component";
 
 const emptyProduct: Product = {
   id: 0,
@@ -29,12 +30,12 @@ const emptyProduct: Product = {
 
 @Component({
   selector: "app-product-list",
-  templateUrl: "./product-list.component.html",
-  styleUrls: ["./product-list.component.scss"],
+  templateUrl: "./signup.component.html",
+  styleUrls: ["./signup.component.scss"],
   standalone: true,
-  imports: [DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent, FormsModule, RatingModule, NgClass],
+  imports: [DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent, FormsModule, RatingModule, NgClass, SignupFormComponent],
 })
-export class ProductListComponent implements OnInit {
+export class SignupComponent implements OnInit {
   private readonly productsService = inject(ProductsService);
 
   public readonly products = this.productsService.products;
