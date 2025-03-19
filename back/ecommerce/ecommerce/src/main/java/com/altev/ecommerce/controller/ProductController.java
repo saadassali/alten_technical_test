@@ -30,13 +30,11 @@ public class ProductController {
     }
 
     @PostMapping
-//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Product> createProduct(@RequestBody ProductDTO product) {
         return ResponseEntity.ok(productService.saveProduct(product));
     }
 
     @PatchMapping("/{id}")
-//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody ProductDTO product) {
         return productService.getProductById(id)
             .map(existingProduct -> {
@@ -47,7 +45,6 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return ResponseEntity.noContent().build();
