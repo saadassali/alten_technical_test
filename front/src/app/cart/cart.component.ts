@@ -4,6 +4,7 @@ import {selectCartCount, selectCartItems} from "../service/cart.selectors";
 import {AsyncPipe, NgForOf} from "@angular/common";
 
 import * as CartActions from '../service/cart.actions';
+import {ProductItemComponent} from "../products/features/product-list/product-item/product-item.component";
 
 @Component({
   selector: 'app-cart',
@@ -12,14 +13,17 @@ import * as CartActions from '../service/cart.actions';
     <h2>Cart ({{ cartCount$ | async }})</h2>
     <ul>
       <li *ngFor="let product of cart$ | async">
-        {{ product.name }} - {{product.price}}
-        <button (click)="removeFromCart(product.id)">Remove</button>
+
+        <app-custom-product-item [product]="product"/>
+<!--        {{ product.name }} - {{product.price}}-->
+<!--        <button (click)="removeFromCart(product.id)">Remove</button>-->
       </li>
     </ul>
   `,
   imports: [
     AsyncPipe,
-    NgForOf
+    NgForOf,
+    ProductItemComponent
   ]
 })
 export class CartComponent {
@@ -27,7 +31,4 @@ export class CartComponent {
   cart$ = this.store.select(selectCartItems);
   cartCount$ = this.store.select(selectCartCount);
 
-  removeFromCart(productId: number) {
-    this.store.dispatch(CartActions.removeFromCart({ productId }));
-  }
 }

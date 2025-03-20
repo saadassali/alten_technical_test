@@ -5,12 +5,24 @@
     <div class="p-toolbar-group-center">
         {{ title }}
     </div>
-    <div class="p-toolbar-group-end">
-        <i class="pi pi-shopping-cart" style="font-size: 2rem"></i>
-    </div>
+  <div class="p-toolbar-group-end" style="display: flex; gap: 20px; align-items: center;">
+    <a href="/wishlist" class="relative">
+      <i class="pi pi-heart" style="font-size: 2rem;"></i>
+      <p-badge *ngIf="(wishlistCount$ | async) as wishlistCount;"
+               [value]="wishlistCount" severity="danger" class="badge-pos">
+      </p-badge>
+    </a>
+
+    <a href="/cart" class="relative">
+      <i class="pi pi-shopping-cart" style="font-size: 2rem;"></i>
+      <p-badge *ngIf="(cartCount$ | async) as cartCount;"
+               [value]="cartCount" severity="warning" class="badge-pos">
+      </p-badge>
+    </a>
+  </div>
 </p-toolbar>
-<p-splitter 
-    [panelSizes]="[20, 80]" 
+<p-splitter
+    [panelSizes]="[20, 80]"
     [style]="{ height: 'calc(100vh - 100px)' }">
     <ng-template pTemplate>
         <div class="w-full">

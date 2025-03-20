@@ -5,18 +5,22 @@ import {selectWishlistCount, selectWishlistItems} from "../service/wishlist.sele
 import {Product} from "../products/data-access/product.model";
 import * as WishlistActions from '../service/wishlist.actions';
 import * as CartActions from '../service/cart.actions';
+import {ProductItemComponent} from "../products/features/product-list/product-item/product-item.component";
 
 @Component({
   selector: 'app-wishlist',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ProductItemComponent],
   template: `
     <h2>Wishlist ({{ wishlistCount$ | async }})</h2>
     <ul>
       <li *ngFor="let product of wishlist$ | async">
-        {{ product.name }} - {{ product.price | currency }}
-        <button (click)="moveToCart(product)">Move to Cart</button>
-        <button (click)="removeFromWishlist(product.id)">Remove</button>
+
+        <app-custom-product-item [product]="product"/>
+
+<!--        {{ product.name }} - {{ product.price | currency }}-->
+<!--        <button (click)="moveToCart(product)">Move to Cart</button>-->
+<!--        <button (click)="removeFromWishlist(product.id)">Remove</button>-->
       </li>
     </ul>
   `,

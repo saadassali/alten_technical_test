@@ -1,0 +1,50 @@
+<p-card class="block mb-2">
+  <span class="font-medium text-secondary text-sm">{{ product.category }}</span>
+  <div class="text-lg font-medium text-900 mt-2">{{ product.name }}</div>
+
+  <!-- Code Produit -->
+  <div class="text-sm text-500">Code: <span class="text-primary">{{ product.code }}</span></div>
+
+  <!-- Statut d'inventaire -->
+  <div class="text-sm mt-1">
+    Statut :
+    <span [ngClass]="{
+                        'text-green-500': product.inventoryStatus === 'INSTOCK',
+                        'text-orange-500': product.inventoryStatus === 'LOWSTOCK',
+                        'text-red-500': product.inventoryStatus === 'OUTOFSTOCK'
+                    }">
+                        {{ product.inventoryStatus }}
+                    </span>
+  </div>
+
+  <!-- Quantité en stock -->
+  <div class="text-sm">Stock: <b>{{ product.quantity }}</b> unités</div>
+
+  <!-- Évaluation en étoiles -->
+  <div class="mt-2">
+    <p-rating [ngModel]="3"
+              readonly="true" cancel="false"></p-rating>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="flex gap-3 mt-1">
+      @if(isCartPage){
+        <p-button label="Remove From Cart" severity="warning" (onClick)="removeFromCart(product.id)"/>
+      } @else {
+        <p-button label="Add To Cart" severity="secondary" (onClick)="addToCart(product)"/>
+      }
+      @if(isWishListPage){
+        <p-button label="Remove From WishList" severity="warning" (onClick)="removeFromWishList(product.id)"/>
+      } @else {
+      <p-button label="Add To WishList" severity="secondary" (onClick)="addToWishlist(product)"/>
+      }
+        @if(onUpdate.observed){
+        <p-button label="Modifier" severity="secondary" (onClick)="updateProduct(product)"/>
+      }
+      @if (onDelete.observed){
+        <p-button label="Supprimer" severity="danger" (onClick)="deleteProduct(product)"/>
+      }
+
+    </div>
+  </ng-template>
+</p-card>

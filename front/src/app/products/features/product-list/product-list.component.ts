@@ -12,6 +12,7 @@ import {NgClass} from "@angular/common";
 import * as WishlistActions from "../../../service/wishlist.actions";
 import * as CartActions from "../../../service/cart.actions";
 import {Store} from "@ngrx/store";
+import {ProductItemComponent} from "./product-item/product-item.component";
 
 const emptyProduct: Product = {
   id: 0,
@@ -35,10 +36,9 @@ const emptyProduct: Product = {
   templateUrl: "./product-list.component.html",
   styleUrls: ["./product-list.component.scss"],
   standalone: true,
-  imports: [DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent, FormsModule, RatingModule, NgClass],
+  imports: [DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent, FormsModule, RatingModule, NgClass, ProductItemComponent],
 })
 export class ProductListComponent implements OnInit {
-  private store = inject(Store);
 
   private readonly productsService = inject(ProductsService);
 
@@ -62,15 +62,6 @@ export class ProductListComponent implements OnInit {
     this.isCreation = false;
     this.isDialogVisible = true;
     this.editedProduct.set(product);
-  }
-
-
-  public addToCart(product: Product) {
-    this.store.dispatch(CartActions.addToCart({ product }));
-  }
-
-  public addToWishlist(product: Product) {
-    this.store.dispatch(WishlistActions.addToWishlist({ product }));
   }
 
   public onDelete(product: Product) {
