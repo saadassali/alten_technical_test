@@ -6,6 +6,7 @@ import com.altev.ecommerce.dao.UserRepository;
 import com.altev.ecommerce.entity.Cart;
 import com.altev.ecommerce.entity.Product;
 import com.altev.ecommerce.entity.User;
+import jakarta.transaction.Transactional;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -47,5 +48,23 @@ public class CartService {
         String username = authentication.getName();
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    @Transactional
+    public void removeFromCart(Long productId) {
+        User user = getAuthenticatedUser();
+
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        Cart cart = cartRepository.findByUser(user)
+                .orElseThrow(() -> new RuntimeException("Cart not found"));
+
+        if (!cart.getProducts().contains(product)) {
+            throw new RuntimeException("Product is not in the cart");
+        }
+
+        cart.getProducts().remove(product);
+        cartRepository.save(cart);
     }
 }

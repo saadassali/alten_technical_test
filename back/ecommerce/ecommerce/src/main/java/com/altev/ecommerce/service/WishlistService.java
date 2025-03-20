@@ -3,9 +3,11 @@ package com.altev.ecommerce.service;
 import com.altev.ecommerce.dao.ProductRepository;
 import com.altev.ecommerce.dao.UserRepository;
 import com.altev.ecommerce.dao.WishlistRepository;
+import com.altev.ecommerce.entity.Cart;
 import com.altev.ecommerce.entity.Product;
 import com.altev.ecommerce.entity.User;
 import com.altev.ecommerce.entity.Wishlist;
+import jakarta.transaction.Transactional;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -47,5 +49,23 @@ public class WishlistService {
         String username = authentication.getName();
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    @Transactional
+    public void removeFromWishlist(Long productId) {
+        User user = getAuthenticatedUser();
+
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        Wishlist wishlist = wishlistRepository.findByUser(user)
+                .orElseThrow(() -> new RuntimeException("WishList not found"));
+
+        if (!wishlist.getProducts().contains(product)) {
+            throw new RuntimeException("Product is not in the WishList");
+        }
+
+        wishlist.getProducts().remove(product);
+        wishlistRepository.save(wishlist);
     }
 }

@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { tap, withLatestFrom } from 'rxjs/operators';
+import {map, mergeMap, tap, withLatestFrom} from 'rxjs/operators';
 import * as CartActions from './cart.actions';
 import { selectCartState } from './cart.selectors';
+import {catchError, of} from "rxjs";
+import {CartService} from "../service/cart.service";
 
 @Injectable()
 export class CartEffects {
@@ -16,5 +18,32 @@ export class CartEffects {
     { dispatch: false }
   );
 
-  constructor(private actions$: Actions, private store: Store) {}
+  addToCart$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CartActions.addToCart),
+      mergeMap(({ product }) =>
+        this.cartService.addToCart(product.id).pipe(
+          map((message) => CartActions.addToCartSuccess({ message })),
+          catchError((error) =>
+            of(CartActions.addToCartFailure({ error: error.message }))
+          )
+        )
+      )
+    )
+  );
+  removeFromCart$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CartActions.removeFromCart),
+      mergeMap(({ productId }) =>
+        this.cartService.removeFromCart(productId).pipe(
+          map(() => CartActions.removeFromCartSuccess({ productId })),
+          catchError((error) =>
+            of(CartActions.removeFromCartFailure({ error: error.message }))
+          )
+        )
+      )
+    )
+  );
+
+  constructor(private actions$: Actions, private store: Store,private cartService: CartService) {}
 }

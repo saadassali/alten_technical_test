@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/wishlist")
+@RequestMapping("/wishlist")
 public class WishlistController {
     private final WishlistService wishlistService;
 
@@ -17,5 +17,11 @@ public class WishlistController {
     public ResponseEntity<String> addToWishlist(@RequestParam Long productId) {
         wishlistService.addToWishlist(productId);
         return ResponseEntity.ok("Product added to wishlist successfully.");
+    }
+
+    @DeleteMapping("/{productId}") // Added leading slash for consistency
+    public ResponseEntity<String> removeFromCart(@PathVariable Long productId) {
+        wishlistService.removeFromWishlist(productId);
+        return ResponseEntity.ok("Product removed from wishlist successfully.");
     }
 }

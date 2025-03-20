@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/cart")
+@RequestMapping("/cart")
 public class CartController {
     private final CartService cartService;
 
@@ -13,9 +13,14 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    @PostMapping("/add")
+    @PostMapping()
     public ResponseEntity<String> addToCart(@RequestParam Long productId) {
         cartService.addToCart(productId);
         return ResponseEntity.ok("Product added to cart successfully.");
+    }
+    @DeleteMapping("/{productId}") // Added leading slash for consistency
+    public ResponseEntity<String> removeFromCart(@PathVariable Long productId) {
+        cartService.removeFromCart(productId);
+        return ResponseEntity.ok("Product removed from cart successfully.");
     }
 }
