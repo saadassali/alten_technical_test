@@ -14,8 +14,8 @@ public class ProductDTO {
     private String description;
     private String image;
     private String category;
-    private double price;
-    private int quantity;
+    private Double price;
+    private Integer quantity;
     private String internalReference;
     private Long shellId;
 
@@ -73,7 +73,7 @@ public class ProductDTO {
         this.category = category;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
@@ -81,7 +81,7 @@ public class ProductDTO {
         this.price = price;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
@@ -113,7 +113,7 @@ public class ProductDTO {
         this.inventoryStatus = inventoryStatus;
     }
 
-    public int getRating() {
+    public Integer getRating() {
         return rating;
     }
 

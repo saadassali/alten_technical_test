@@ -36,15 +36,10 @@ public class ProductController {
         return ResponseEntity.ok(productService.saveProduct(product));
     }
 
-    @PatchMapping("/{id}")
-    @RequireAdmin
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody ProductDTO product) {
-        return productService.getProductById(id)
-            .map(existingProduct -> {
-                product.setId(id);
-                return ResponseEntity.ok(productService.saveProduct(product));
-            })
-            .orElseGet(() -> ResponseEntity.notFound().build());
+    @PatchMapping // No path parameter, getting ID from the request body
+    @RequireAdmin // Ensure admin access
+    public ResponseEntity<Product> updateProduct(@RequestBody ProductDTO productDTO) {
+        return productService.updateProduct(productDTO);
     }
 
     @DeleteMapping("/{id}")

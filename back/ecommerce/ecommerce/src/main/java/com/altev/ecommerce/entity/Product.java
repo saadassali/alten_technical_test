@@ -17,8 +17,8 @@ public class Product {
     private String description;
     private String image;
     private String category;
-    private double price;
-    private int quantity;
+    private Double price;
+    private Integer quantity;
     private String internalReference;
     private Long shellId;
 
