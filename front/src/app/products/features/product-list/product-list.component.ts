@@ -9,6 +9,9 @@ import { DialogModule } from 'primeng/dialog';
 import {FormsModule} from "@angular/forms";
 import {RatingModule} from "primeng/rating";
 import {NgClass} from "@angular/common";
+import * as WishlistActions from "../../../service/wishlist.actions";
+import * as CartActions from "../../../service/cart.actions";
+import {Store} from "@ngrx/store";
 
 const emptyProduct: Product = {
   id: 0,
@@ -35,6 +38,8 @@ const emptyProduct: Product = {
   imports: [DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent, FormsModule, RatingModule, NgClass],
 })
 export class ProductListComponent implements OnInit {
+  private store = inject(Store);
+
   private readonly productsService = inject(ProductsService);
 
   public readonly products = this.productsService.products;
@@ -57,6 +62,15 @@ export class ProductListComponent implements OnInit {
     this.isCreation = false;
     this.isDialogVisible = true;
     this.editedProduct.set(product);
+  }
+
+
+  public addToCart(product: Product) {
+    this.store.dispatch(CartActions.addToCart({ product }));
+  }
+
+  public addToWishlist(product: Product) {
+    this.store.dispatch(WishlistActions.addToWishlist({ product }));
   }
 
   public onDelete(product: Product) {

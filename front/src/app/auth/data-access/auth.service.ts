@@ -5,7 +5,7 @@ import { catchError, Observable, of, tap } from "rxjs";
 
 @Injectable({
     providedIn: "root"
-}) export class ProductsService {
+}) export class AuthService {
 
     private readonly http = inject(HttpClient);
     private readonly path = "http://localhost:8080/api/products";
