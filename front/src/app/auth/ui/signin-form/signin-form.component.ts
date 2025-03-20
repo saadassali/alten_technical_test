@@ -10,7 +10,7 @@ import { InputTextModule } from "primeng/inputtext";
 import { PasswordModule } from "primeng/password";
 
 @Component({
-  selector: "",
+  selector: "app-signin-form",
   template: `
     <form #form="ngForm" (ngSubmit)="onSignIn()">
       <div class="form-field">

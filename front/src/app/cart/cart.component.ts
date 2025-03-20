@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {selectCartCount, selectCartItems} from "../service/cart.selectors";
-import {AsyncPipe} from "@angular/common";
+import {AsyncPipe, NgForOf} from "@angular/common";
 
 import * as CartActions from '../service/cart.actions';
 
@@ -18,7 +18,8 @@ import * as CartActions from '../service/cart.actions';
     </ul>
   `,
   imports: [
-    AsyncPipe
+    AsyncPipe,
+    NgForOf
   ]
 })
 export class CartComponent {

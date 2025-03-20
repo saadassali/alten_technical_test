@@ -34,6 +34,16 @@ import { MenuItem } from "primeng/api";
         label: 'SignUp',
         icon: 'pi pi-barcode',
         routerLink: ['/auth/signup']
+      },
+      {
+        label: 'WishList',
+        icon: 'pi pi-barcode',
+        routerLink: ['/wishlist']
+      },
+      {
+        label: 'Cart',
+        icon: 'pi pi-barcode',
+        routerLink: ['/cart']
       }
     ]
   }
