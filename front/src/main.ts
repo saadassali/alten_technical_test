@@ -20,7 +20,7 @@ import {WishlistEffects} from "./app/wishlist/store/wishlist.effects";
 import {CartEffects} from "./app/cart/store/cart.effects";
 import {wishlistReducer} from "./app/wishlist/store/wishlist.reducer";
 import {cartReducer} from "./app/cart/store/cart.reducer";
-import {authInterceptor} from "./app/interceptors/auth.service";
+import {authInterceptor} from "./app/auth/core/auth.interceptor";
 
 if (environment.production) {
   enableProdMode();

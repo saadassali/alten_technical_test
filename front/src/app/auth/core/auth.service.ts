@@ -8,7 +8,7 @@ import {HttpClient} from "@angular/common/http";
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api/auth/'; // Backend API URL
+  private apiUrl = 'http://localhost:8080/api/auth/';
 
   constructor(private http: HttpClient,private router: Router) {}
 
