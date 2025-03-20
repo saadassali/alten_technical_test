@@ -11,22 +11,7 @@ import {RatingModule} from "primeng/rating";
 import {NgClass} from "@angular/common";
 import {SigninFormComponent} from "../ui/signin-form/signin-form.component";
 
-const emptyProduct: Product = {
-  id: 0,
-  code: "",
-  name: "",
-  description: "",
-  image: "",
-  category: "",
-  price: 0,
-  quantity: 0,
-  internalReference: "",
-  shellId: 0,
-  inventoryStatus: "INSTOCK",
-  rating: 0,
-  createdAt: 0,
-  updatedAt: 0,
-};
+
 
 @Component({
   selector: "app-product-list",
@@ -35,49 +20,6 @@ const emptyProduct: Product = {
   standalone: true,
   imports: [DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent, FormsModule, RatingModule, NgClass,SigninFormComponent],
 })
-export class SigninComponent implements OnInit {
-  private readonly productsService = inject(ProductsService);
+export class SigninComponent {
 
-  public readonly products = this.productsService.products;
-
-  public isDialogVisible = false;
-  public isCreation = false;
-  public readonly editedProduct = signal<Product>(emptyProduct);
-
-  ngOnInit() {
-    this.productsService.get().subscribe();
-  }
-
-  public onCreate() {
-    this.isCreation = true;
-    this.isDialogVisible = true;
-    this.editedProduct.set(emptyProduct);
-  }
-
-  public onUpdate(product: Product) {
-    this.isCreation = false;
-    this.isDialogVisible = true;
-    this.editedProduct.set(product);
-  }
-
-  public onDelete(product: Product) {
-    this.productsService.delete(product.id).subscribe();
-  }
-
-  public onSave(product: Product) {
-    if (this.isCreation) {
-      this.productsService.create(product).subscribe();
-    } else {
-      this.productsService.update(product).subscribe();
-    }
-    this.closeDialog();
-  }
-
-  public onCancel() {
-    this.closeDialog();
-  }
-
-  private closeDialog() {
-    this.isDialogVisible = false;
-  }
 }

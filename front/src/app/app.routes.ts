@@ -2,24 +2,29 @@ import { Routes } from "@angular/router";
 import { HomeComponent } from "./shared/features/home/home.component";
 import {CartComponent} from "./cart/cart.component";
 import {WishlistComponent} from "./wishlist/wishlist.component";
+import { authGuard } from "./auth/core/auth.guard";
 
 export const APP_ROUTES: Routes = [
   {
     path: "home",
     component: HomeComponent,
+    canActivate: [authGuard]
   },
   {
     path: "cart",
     component: CartComponent,
+    canActivate: [authGuard]
   },
   {
     path: "wishlist",
     component: WishlistComponent,
+    canActivate: [authGuard]
   },
   {
     path: "products",
     loadChildren: () =>
-      import("./products/products.routes").then((m) => m.PRODUCTS_ROUTES)
+      import("./products/products.routes").then((m) => m.PRODUCTS_ROUTES),
+    canActivate: [authGuard]
   },
   {
     path: "auth",

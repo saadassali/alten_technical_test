@@ -8,35 +8,23 @@ import { FormsModule } from "@angular/forms";
 import { ButtonModule } from "primeng/button";
 import { InputTextModule } from "primeng/inputtext";
 import { PasswordModule } from "primeng/password";
+import {AuthService} from "../../core/auth.service";
 
 @Component({
   selector: "app-signup-form",
   template: `
     <form #form="ngForm" (ngSubmit)="onSignup()">
       <div class="form-field">
-        <label for="firstname">Prénom</label>
+        <label for="username">Username</label>
         <input
           pInputText
           type="text"
-          id="firstname"
-          name="firstname"
-          [(ngModel)]="firstname"
+          id="username"
+          name="username"
+          [(ngModel)]="username"
           required
         />
       </div>
-
-      <div class="form-field">
-        <label for="lastname">Nom</label>
-        <input
-          pInputText
-          type="text"
-          id="lastname"
-          name="lastname"
-          [(ngModel)]="lastname"
-          required
-        />
-      </div>
-
       <div class="form-field">
         <label for="email">Email</label>
         <input
@@ -72,7 +60,6 @@ import { PasswordModule } from "primeng/password";
       </div>
 
       <div class="flex justify-content-between">
-        <p-button type="button" (click)="onCancel()" label="Annuler" severity="help" />
         <p-button type="submit" [disabled]="!form.valid || passwordsDontMatch()" label="S'inscrire" severity="success" />
       </div>
       @if(passwordsDontMatch()){
@@ -94,26 +81,25 @@ import { PasswordModule } from "primeng/password";
   encapsulation: ViewEncapsulation.None
 })
 export class SignupFormComponent {
-  public firstname: string = "";
+  public username: string = "";
   public lastname: string = "";
   public email: string = "";
   public password: string = "";
   public confirmPassword: string = "";
 
   @Output() cancel = new EventEmitter<void>();
-  @Output() signup = new EventEmitter<{ firstname: string; lastname: string; email: string; password: string }>();
-
-  onCancel() {
-    this.cancel.emit();
-  }
+  @Output() signup = new EventEmitter<{ username: string; lastname: string; email: string; password: string }>();
 
   onSignup() {
     if (!this.passwordsDontMatch()) {
-      this.signup.emit({
-        firstname: this.firstname,
-        lastname: this.lastname,
-        email: this.email,
-        password: this.password
+      this.authService.signup({username:this.username,email:this.email, password: this.password}).subscribe({
+        next: () => {
+          console.log('Signup successful!');
+        },
+        error: (err) => {
+          this.errorMessage = err.message;
+          console.error('Signup failed:', err);
+        }
       });
     }
   }
@@ -121,4 +107,8 @@ export class SignupFormComponent {
   passwordsDontMatch(): boolean {
     return this.password !== this.confirmPassword && this.password.length > 0 && this.confirmPassword.length > 0;
   }
+  constructor(private authService: AuthService) {}
+  errorMessage = '';
+
+
 }

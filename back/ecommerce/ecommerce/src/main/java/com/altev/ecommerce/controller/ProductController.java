@@ -19,7 +19,6 @@ public class ProductController {
     }
 
     @GetMapping
-    @RequireAdmin
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
@@ -32,11 +31,13 @@ public class ProductController {
     }
 
     @PostMapping
+    @RequireAdmin
     public ResponseEntity<Product> createProduct(@RequestBody ProductDTO product) {
         return ResponseEntity.ok(productService.saveProduct(product));
     }
 
     @PatchMapping("/{id}")
+    @RequireAdmin
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody ProductDTO product) {
         return productService.getProductById(id)
             .map(existingProduct -> {
@@ -47,6 +48,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
+    @RequireAdmin
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return ResponseEntity.noContent().build();

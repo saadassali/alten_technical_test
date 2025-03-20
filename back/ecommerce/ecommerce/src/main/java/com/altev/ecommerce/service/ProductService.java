@@ -4,11 +4,7 @@ import com.altev.ecommerce.dao.ProductRepository;
 import com.altev.ecommerce.dao.UserRepository;
 import com.altev.ecommerce.dto.ProductDTO;
 import com.altev.ecommerce.entity.Product;
-import com.altev.ecommerce.entity.User;
 import com.altev.ecommerce.mappers.ProductMapper;
-import org.aspectj.lang.annotation.Before;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

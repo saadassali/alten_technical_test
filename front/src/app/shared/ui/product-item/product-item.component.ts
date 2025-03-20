@@ -35,9 +35,6 @@ export class ProductItemComponent implements OnInit{
   ngOnInit() {
     this.isCartPage = this.router.url.includes('/cart');
     this.isWishListPage = this.router.url.includes('/wishlist');
-    console.log("hello")
-    console.log("this.router.url: ",this.router.url)
-
   }
   updateProduct(product: Product) {
     this.onUpdate.emit(product);
@@ -46,7 +43,6 @@ export class ProductItemComponent implements OnInit{
   deleteProduct(product: Product) {
     this.onDelete.emit(product);
   }
-
 
   public addToCart(product: Product) {
     this.store.dispatch(CartActions.addToCart({ product }));
