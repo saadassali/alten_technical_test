@@ -1,5 +1,6 @@
 package com.altev.ecommerce.controller;
 
+import com.altev.ecommerce.annotations.RequireAdmin;
 import com.altev.ecommerce.dto.ProductDTO;
 import com.altev.ecommerce.entity.Product;
 import com.altev.ecommerce.service.ProductService;
@@ -18,6 +19,7 @@ public class ProductController {
     }
 
     @GetMapping
+    @RequireAdmin
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }

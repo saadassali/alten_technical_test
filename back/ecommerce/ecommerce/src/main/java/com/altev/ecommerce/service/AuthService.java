@@ -31,7 +31,7 @@ public class AuthService {
         user.setUsername(request.getUsername());
         user.setFirstname(request.getFirstname());
         user.setPassword(passwordEncoder.encode(request.getPassword())); // Encrypt password
-        if(request.getUsername().equals("admin@admin.com")){
+        if(request.getEmail().equals("admin@admin.com")){
             user.setIsAdmin(true);
         }else{
             user.setIsAdmin(false);
