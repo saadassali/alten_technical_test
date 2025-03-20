@@ -16,10 +16,10 @@ import { AppComponent } from "./app/app.component";
 import { environment } from "./environments/environment";
 import {provideEffects} from "@ngrx/effects";
 import {provideState, provideStore} from "@ngrx/store";
-import {WishlistEffects} from "./app/service/wishlist.effects";
-import {CartEffects} from "./app/service/cart.effects";
-import {wishlistReducer} from "./app/service/wishlist.reducer";
-import {cartReducer} from "./app/service/cart.reducer";
+import {WishlistEffects} from "./app/wishlist/store/wishlist.effects";
+import {CartEffects} from "./app/cart/store/cart.effects";
+import {wishlistReducer} from "./app/wishlist/store/wishlist.reducer";
+import {cartReducer} from "./app/cart/store/cart.reducer";
 
 if (environment.production) {
   enableProdMode();

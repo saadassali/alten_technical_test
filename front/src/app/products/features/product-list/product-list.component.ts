@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, signal } from "@angular/core";
-import { Product } from "app/products/data-access/product.model";
+import { Product } from "app/shared/models/product.model";
 import { ProductsService } from "app/products/data-access/products.service";
 import { ProductFormComponent } from "app/products/ui/product-form/product-form.component";
 import { ButtonModule } from "primeng/button";
@@ -9,10 +9,10 @@ import { DialogModule } from 'primeng/dialog';
 import {FormsModule} from "@angular/forms";
 import {RatingModule} from "primeng/rating";
 import {NgClass} from "@angular/common";
-import * as WishlistActions from "../../../service/wishlist.actions";
-import * as CartActions from "../../../service/cart.actions";
+import * as WishlistActions from "../../../wishlist/store/wishlist.actions";
+import * as CartActions from "../../../cart/store/cart.actions";
 import {Store} from "@ngrx/store";
-import {ProductItemComponent} from "./product-item/product-item.component";
+import {ProductItemComponent} from "../../../shared/ui/product-item/product-item.component";
 
 const emptyProduct: Product = {
   id: 0,

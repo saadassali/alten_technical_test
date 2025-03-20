@@ -1,4 +1,4 @@
-import {Product} from "../products/data-access/product.model";
+import {Product} from "./product.model";
 
 export interface CartWishlistState {
   cart: Product[];

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
-import {Product} from "../../../data-access/product.model";
-import * as CartActions from "../../../../service/cart.actions";
-import * as WishlistActions from "../../../../service/wishlist.actions";
+import {Product} from "../../models/product.model";
+import * as CartActions from "../../../cart/store/cart.actions";
+import * as WishlistActions from "../../../wishlist/store/wishlist.actions";
 import {NgClass} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {Store} from "@ngrx/store";

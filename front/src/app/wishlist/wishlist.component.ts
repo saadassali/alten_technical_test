@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
-import {selectWishlistCount, selectWishlistItems} from "../service/wishlist.selectors";
-import {Product} from "../products/data-access/product.model";
-import * as WishlistActions from '../service/wishlist.actions';
-import * as CartActions from '../service/cart.actions';
-import {ProductItemComponent} from "../products/features/product-list/product-item/product-item.component";
+import {selectWishlistCount, selectWishlistItems} from "./store/wishlist.selectors";
+import {Product} from "../shared/models/product.model";
+import * as WishlistActions from './store/wishlist.actions';
+import * as CartActions from '../cart/store/cart.actions';
+import {ProductItemComponent} from "../shared/ui/product-item/product-item.component";
 
 @Component({
   selector: 'app-wishlist',

@@ -1,4 +1,4 @@
-import {Product} from "../products/data-access/product.model";
+import {Product} from "../../shared/models/product.model";
 
 export interface WishlistState {
   wishlist: Product[];

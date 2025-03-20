@@ -7,7 +7,7 @@ import {
   ViewEncapsulation,
 } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { Product } from "app/products/data-access/product.model";
+import { Product } from "app/shared/models/product.model";
 import { SelectItem } from "primeng/api";
 import { ButtonModule } from "primeng/button";
 import { DropdownModule } from "primeng/dropdown";
@@ -30,27 +30,27 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
       </div>
       <div class="form-field">
         <label for="price">Prix</label>
-        <p-inputNumber 
-          [(ngModel)]="editedProduct().price" 
+        <p-inputNumber
+          [(ngModel)]="editedProduct().price"
           name="price"
           mode="decimal"
-          required/> 
+          required/>
       </div>
       <div class="form-field">
         <label for="description">Description</label>
-        <textarea pInputTextarea 
+        <textarea pInputTextarea
           id="description"
           name="description"
-          rows="5" 
-          cols="30" 
+          rows="5"
+          cols="30"
           [(ngModel)]="editedProduct().description">
         </textarea>
-      </div>      
+      </div>
       <div class="form-field">
         <label for="description">Catégorie</label>
-        <p-dropdown 
-          [options]="categories" 
-          [(ngModel)]="editedProduct().category" 
+        <p-dropdown
+          [options]="categories"
+          [(ngModel)]="editedProduct().category"
           name="category"
           appendTo="body"
         />
