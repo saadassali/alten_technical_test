@@ -23,6 +23,8 @@
     "@dwtechs/checkhard": "2.24.0",
     "@dwtechs/csvx": "0.3.1",
     "@dwtechs/ctrltab": "3.0.1",
+    "@ngrx/effects": "^19.0.1",
+    "@ngrx/store": "^19.0.1",
     "altenshop": "file:",
     "chart.js": "3.3.2",
     "core-js": "2.5.4",

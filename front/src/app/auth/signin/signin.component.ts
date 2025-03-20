@@ -33,7 +33,7 @@ const emptyProduct: Product = {
   templateUrl: "./signin.component.html",
   styleUrls: ["./signin.component.scss"],
   standalone: true,
-  imports: [DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent, FormsModule, RatingModule, NgClass,SigninFormComponent],
+  imports: [DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent, FormsModule, RatingModule, NgClass],
 })
 export class SigninComponent implements OnInit {
   private readonly productsService = inject(ProductsService);

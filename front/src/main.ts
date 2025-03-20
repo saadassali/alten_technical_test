@@ -14,6 +14,12 @@ import { ConfirmationService, MessageService } from "primeng/api";
 import { DialogService } from "primeng/dynamicdialog";
 import { AppComponent } from "./app/app.component";
 import { environment } from "./environments/environment";
+import {provideEffects} from "@ngrx/effects";
+import {provideState, provideStore} from "@ngrx/store";
+import {WishlistEffects} from "./app/service/wishlist.effects";
+import {CartEffects} from "./app/service/cart.effects";
+import {wishlistReducer} from "./app/service/wishlist.reducer";
+import {cartReducer} from "./app/service/cart.reducer";
 
 if (environment.production) {
   enableProdMode();
@@ -27,6 +33,10 @@ bootstrapApplication(AppComponent, {
     ),
     provideAnimations(),
     provideRouter(APP_ROUTES),
+    provideStore(),
+    provideState({ name: 'cart', reducer: cartReducer }),
+    provideState({ name: 'wishlist', reducer: wishlistReducer }),
+    provideEffects(CartEffects, WishlistEffects),
     ConfirmationService,
     MessageService,
     DialogService,
