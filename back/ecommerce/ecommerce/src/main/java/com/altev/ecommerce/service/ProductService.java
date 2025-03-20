@@ -7,7 +7,6 @@ import com.altev.ecommerce.entity.Product;
 import com.altev.ecommerce.exception.ProductNotFoundException;
 import com.altev.ecommerce.mappers.ProductMapper;
 import org.apache.coyote.BadRequestException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -29,12 +28,11 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Optional<Product> getProductById(Long id) {
-        return productRepository.findById(id);
+    public Product getProductById(Long id) {
+        return productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Product with ID " + id + " not found"));
     }
 
     public Product saveProduct(ProductDTO product) {
-
         return productRepository.save(ProductMapper.dtoToEntity(product));
     }
 

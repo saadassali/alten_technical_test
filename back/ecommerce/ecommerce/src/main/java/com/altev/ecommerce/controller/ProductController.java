@@ -4,6 +4,7 @@ import com.altev.ecommerce.annotations.RequireAdmin;
 import com.altev.ecommerce.dto.ProductDTO;
 import com.altev.ecommerce.entity.Product;
 import com.altev.ecommerce.service.ProductService;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,28 +25,25 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        return productService.getProductById(id)
-            .map(ResponseEntity::ok)
-            .orElseGet(() -> ResponseEntity.notFound().build());
+    public Product getProductById(@PathVariable Long id) {
+        return productService.getProductById(id);
     }
 
     @PostMapping
     @RequireAdmin
-    public ResponseEntity<Product> createProduct(@RequestBody ProductDTO product) {
-        return ResponseEntity.ok(productService.saveProduct(product));
+    public Product createProduct(@RequestBody ProductDTO product) {
+        return productService.saveProduct(product);
     }
 
     @PatchMapping // No path parameter, getting ID from the request body
     @RequireAdmin // Ensure admin access
-    public ResponseEntity<Product> updateProduct(@RequestBody ProductDTO productDTO) {
-        return productService.updateProduct(productDTO);
+    public Product updateProduct(@RequestBody ProductDTO productDTO) throws BadRequestException {
+        return  productService.updateProduct(productDTO);
     }
 
     @DeleteMapping("/{id}")
     @RequireAdmin
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+    public void deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
-        return ResponseEntity.noContent().build();
     }
 }
