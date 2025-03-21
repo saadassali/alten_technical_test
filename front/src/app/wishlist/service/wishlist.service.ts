@@ -21,7 +21,7 @@ export class WishlistService {
   }
 
   removeFromWishlist(productId: number): Observable<{ message: string }> {
-    return this.http.delete<{ message: string }>(`${this.path}${productId}`);
+    return this.http.delete<{ message: string }>(`${this.path}/${productId}`);
   }
 
   public getProductsInWishlist(): Observable<Product[]> {
