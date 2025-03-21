@@ -1,4 +1,4 @@
-package com.altev.ecommerce.service;
+package com.altev.ecommerce.service.impl;
 
 import com.altev.ecommerce.dao.ProductRepository;
 import com.altev.ecommerce.dao.UserRepository;
@@ -6,6 +6,7 @@ import com.altev.ecommerce.dto.ProductDTO;
 import com.altev.ecommerce.entity.Product;
 import com.altev.ecommerce.exception.ProductNotFoundException;
 import com.altev.ecommerce.mappers.ProductMapper;
+import com.altev.ecommerce.service.IProductService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,9 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
-public class ProductService {
+public class ProductService implements IProductService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
 
@@ -24,19 +26,26 @@ public class ProductService {
         this.userRepository = userRepository;
     }
 
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    @Override
+    public List<ProductDTO> getAllProducts() {
+        return productRepository.findAll().stream().map(ProductMapper::entityToDto).collect(Collectors.toList());
     }
 
-    public Product getProductById(Long id) {
-        return productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Product with ID " + id + " not found"));
+    @Override
+    public ProductDTO getProductById(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product with ID " + id + " not found"));
+
+        return ProductMapper.entityToDto(product);
     }
 
-    public Product saveProduct(ProductDTO product) {
-        return productRepository.save(ProductMapper.dtoToEntity(product));
+    @Override
+    public ProductDTO saveProduct(ProductDTO product) {
+        return ProductMapper.entityToDto(productRepository.save(ProductMapper.dtoToEntity(product)));
     }
 
-    public Product updateProduct(@RequestBody ProductDTO productDTO) throws BadRequestException {
+    @Override
+    public ProductDTO updateProduct(@RequestBody ProductDTO productDTO) throws BadRequestException {
         if (productDTO.getId() == null) {
            throw new BadRequestException("Product id is required");
         }
@@ -68,10 +77,11 @@ public class ProductService {
 
         Product updatedProduct = productRepository.save(existingProduct); // Save updated product
 
-        return updatedProduct;
+        return ProductMapper.entityToDto(updatedProduct);
 
     }
 
+    @Override
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
     }

@@ -1,11 +1,14 @@
-package com.altev.ecommerce.service;
+package com.altev.ecommerce.service.impl;
 
 import com.altev.ecommerce.dao.CartRepository;
 import com.altev.ecommerce.dao.ProductRepository;
 import com.altev.ecommerce.dao.UserRepository;
+import com.altev.ecommerce.dto.ProductDTO;
 import com.altev.ecommerce.entity.Cart;
 import com.altev.ecommerce.entity.Product;
 import com.altev.ecommerce.entity.User;
+import com.altev.ecommerce.mappers.ProductMapper;
+import com.altev.ecommerce.service.ICartService;
 import jakarta.transaction.Transactional;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,9 +17,10 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
-public class CartService {
+public class CartService implements ICartService {
     private final CartRepository cartRepository;
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
@@ -27,6 +31,7 @@ public class CartService {
         this.userRepository = userRepository;
     }
 
+    @Override
     public void addToCart(Long productId) {
         User user = getAuthenticatedUser();
 
@@ -52,6 +57,7 @@ public class CartService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
+    @Override
     @Transactional
     public void removeFromCart(Long productId) {
         User user = getAuthenticatedUser();
@@ -70,12 +76,13 @@ public class CartService {
         cartRepository.save(cart);
     }
 
-    public List<Product> getProductsFromUserCart() {
+    @Override
+    public List<ProductDTO> getProductsFromUserCart() {
         User user = getAuthenticatedUser();
-        List<Product> products = new ArrayList<>();
+        List<ProductDTO> products = new ArrayList<>();
         Optional<Cart> cart = cartRepository.findByUser(user);
         if(cart.isPresent() && !cart.get().getProducts().isEmpty()){
-            return cart.get().getProducts();
+            return  cart.get().getProducts().stream().map(ProductMapper::entityToDto).collect(Collectors.toList());
         }else{
             return products;
         }

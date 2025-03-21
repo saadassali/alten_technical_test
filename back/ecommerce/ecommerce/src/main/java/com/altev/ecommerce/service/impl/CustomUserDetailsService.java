@@ -1,10 +1,7 @@
-package com.altev.ecommerce.service;
+package com.altev.ecommerce.service.impl;
 
 import com.altev.ecommerce.dao.UserRepository;
 import com.altev.ecommerce.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

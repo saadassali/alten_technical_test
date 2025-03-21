@@ -3,9 +3,8 @@ package com.altev.ecommerce.controller;
 import com.altev.ecommerce.annotations.RequireAdmin;
 import com.altev.ecommerce.dto.ProductDTO;
 import com.altev.ecommerce.entity.Product;
-import com.altev.ecommerce.service.ProductService;
+import com.altev.ecommerce.service.impl.ProductService;
 import org.apache.coyote.BadRequestException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,24 +19,24 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> getAllProducts() {
+    public List<ProductDTO> getAllProducts() {
         return productService.getAllProducts();
     }
 
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable Long id) {
+    public ProductDTO getProductById(@PathVariable Long id) {
         return productService.getProductById(id);
     }
 
     @PostMapping
     @RequireAdmin
-    public Product createProduct(@RequestBody ProductDTO product) {
+    public ProductDTO createProduct(@RequestBody ProductDTO product) {
         return productService.saveProduct(product);
     }
 
-    @PatchMapping // No path parameter, getting ID from the request body
-    @RequireAdmin // Ensure admin access
-    public Product updateProduct(@RequestBody ProductDTO productDTO) throws BadRequestException {
+    @PatchMapping
+    @RequireAdmin
+    public ProductDTO updateProduct(@RequestBody ProductDTO productDTO) throws BadRequestException {
         return  productService.updateProduct(productDTO);
     }
 

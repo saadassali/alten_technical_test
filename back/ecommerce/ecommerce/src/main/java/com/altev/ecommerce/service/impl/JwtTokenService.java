@@ -1,4 +1,4 @@
-package com.altev.ecommerce.service;
+package com.altev.ecommerce.service.impl;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -44,9 +44,8 @@ public class JwtTokenService {
     public String validateTokenAndGetUsername(String token) {
         try {
             DecodedJWT jwt = jwtVerifier.verify(token);
-            return jwt.getSubject();  // if token is valid, return username (subject)
+            return jwt.getSubject();
         } catch (JWTVerificationException ex) {
-            // token is invalid or expired
             return null;
         }
     }

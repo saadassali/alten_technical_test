@@ -1,7 +1,8 @@
 package com.altev.ecommerce.controller;
 
+import com.altev.ecommerce.dto.ProductDTO;
 import com.altev.ecommerce.entity.Product;
-import com.altev.ecommerce.service.CartService;
+import com.altev.ecommerce.service.impl.CartService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class CartController {
         return ResponseEntity.ok("Product removed from cart successfully.");
     }
     @GetMapping()
-    public List<Product> getProductsFromUserCart() {
+    public List<ProductDTO> getProductsFromUserCart() {
         return cartService.getProductsFromUserCart();
     }
 }

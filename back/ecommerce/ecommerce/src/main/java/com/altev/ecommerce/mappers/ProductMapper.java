@@ -21,8 +21,6 @@ public class ProductMapper {
         product.setDescription(dto.getDescription());
         product.setCategory(dto.getCategory());
         product.setPrice(dto.getPrice());
-        
-        // Set default values
         product.setQuantity(dto.getQuantity());
         product.setInternalReference(dto.getInternalReference());
         product.setShellId(dto.getShellId());
@@ -47,6 +45,13 @@ public class ProductMapper {
         dto.setDescription(product.getDescription());
         dto.setCategory(product.getCategory());
         dto.setPrice(product.getPrice());
+        dto.setQuantity(product.getQuantity());
+        dto.setInternalReference(product.getInternalReference());
+        dto.setShellId(product.getShellId());
+        dto.setInventoryStatus(product.getInventoryStatus());
+        dto.setRating(product.getRating());
+        dto.setImage(product.getImage());
+
 
         return dto;
     }
