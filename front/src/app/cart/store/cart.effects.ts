@@ -53,9 +53,30 @@ export class CartEffects {
           catchError((error) =>
             of(CartActions.loadCartFailure({ error: error.message }))
           )
+
         )
       )
     )
+  );
+  saveLoadedCart$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CartActions.loadCartSuccess),
+        tap(({ cart }) => {
+          const state = { cart }; // matches CartState shape
+          localStorage.setItem('cart_state', JSON.stringify(state));
+        })
+      ),
+    { dispatch: false }
+  );
+  clearCart$ = createEffect(
+    () => this.actions$.pipe(
+      ofType(CartActions.clearCart),
+      tap(() => {
+        localStorage.removeItem('cart_state');
+      })
+    ),
+    { dispatch: false }
   );
 
   constructor(private actions$: Actions, private store: Store,private cartService: CartService) {}

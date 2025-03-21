@@ -23,5 +23,14 @@ export const removeFromWishlistFailure = createAction(
   '[Wishlist] Remove From Wishlist Failure',
   props<{ error: string }>()
 );
+export const loadWishlist = createAction('[Wishlist] Load Wishlist');
+export const loadWishlistSuccess = createAction(
+  '[Wishlist] Load Wishlist Success',
+  props<{ wishlist: Product[] }>()
+);
+export const loadWishlistFailure = createAction(
+  '[Wishlist] Load Wishlist Failure',
+  props<{ error: string }>()
+);
 export const clearWishlist = createAction('[Wishlist] Clear Wishlist');
 

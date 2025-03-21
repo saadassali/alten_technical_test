@@ -44,5 +44,38 @@ export class WishlistEffects {
       )
     )
   );
+  loadCart$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(WishlistActions.loadWishlist),
+      mergeMap(() =>
+        this.wishlistService.getProductsInWishlist().pipe(
+          map((wishlist) => WishlistActions.loadWishlistSuccess({ wishlist })),
+          catchError((error) =>
+            of(WishlistActions.loadWishlistFailure({ error: error.message }))
+          )
+        )
+      )
+    )
+  );
+  saveLoadedWishlist$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(WishlistActions.loadWishlistSuccess),
+        tap(({ wishlist }) => {
+          const state = { wishlist }; // matches WishlistState structure
+          localStorage.setItem('wishlist_state', JSON.stringify(state));
+        })
+      ),
+    { dispatch: false }
+  );
+  clearWishlist$ = createEffect(
+    () => this.actions$.pipe(
+      ofType(WishlistActions.clearWishlist),
+      tap(() => {
+        localStorage.removeItem('wishlist_state'); // Or whatever key you used
+      })
+    ),
+    { dispatch: false } // Because it's a side-effect only
+  );
   constructor(private actions$: Actions, private store: Store,private wishlistService: WishlistService) {}
 }

@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
-import { initialWishlistState, WishlistState } from './wishlist.state';
+import { initialWishlistState, } from './wishlist.state';
 import * as WishlistActions from './wishlist.actions';
+import * as CartActions from "../../cart/store/cart.actions";
 
 export const wishlistReducer = createReducer(
   initialWishlistState,
@@ -21,6 +22,10 @@ export const wishlistReducer = createReducer(
   })),
   on(WishlistActions.clearWishlist, (state) => ({
     ...state,
-    items: [] // or your wishlist model reset state
+    wishlist: [] // or your wishlist model reset state
+  })),
+  on(CartActions.loadCartSuccess, (state, { cart }) => ({
+    ...state,
+    cart
   }))
 );

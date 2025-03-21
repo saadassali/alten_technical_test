@@ -2,6 +2,8 @@ import { Routes } from "@angular/router";
 import { HomeComponent } from "./shared/features/home/home.component";
 import { authGuard } from "./auth/core/auth.guard";
 import {ContactComponent} from "./contact/ui/contact.component";
+import {CartComponent} from "./cart/cart.component";
+import {WishlistComponent} from "./wishlist/wishlist.component";
 
 export const APP_ROUTES: Routes = [
   {
@@ -12,6 +14,16 @@ export const APP_ROUTES: Routes = [
   {
     path: "contact",
     component: ContactComponent,
+  },
+  {
+    path: "cart",
+    component: CartComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: "wishlist",
+    component: WishlistComponent,
+    canActivate: [authGuard]
   },
   {
     path: "products",

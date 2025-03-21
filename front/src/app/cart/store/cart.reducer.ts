@@ -15,7 +15,7 @@ export const cartReducer = createReducer(
 
   on(CartActions.clearCart, (state) => ({
     ...state,
-    items: []
+    cart: []
   })),
   on(CartActions.loadCartSuccess, (state, { cart }) => ({
     ...state,

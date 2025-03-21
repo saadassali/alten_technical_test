@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import {jwtDecode} from "jwt-decode";
 import {Observable, tap} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-import {clearWishlist} from "../../wishlist/store/wishlist.actions";
-import {clearCart} from "../../cart/store/cart.actions";
+import {clearWishlist, loadWishlist} from "../../wishlist/store/wishlist.actions";
+import {clearCart, loadCart} from "../../cart/store/cart.actions";
 import {Store} from "@ngrx/store";
 
 @Injectable({
@@ -20,6 +20,8 @@ export class AuthService {
       tap(response => {
         if (response.token) {
           localStorage.setItem('accessToken', response.token);
+          this.store.dispatch(loadCart());
+          this.store.dispatch(loadWishlist());
           this.router.navigate(['/products']);
         }
       })
