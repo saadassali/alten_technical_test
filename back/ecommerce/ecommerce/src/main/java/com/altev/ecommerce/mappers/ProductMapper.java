@@ -40,17 +40,19 @@ public class ProductMapper {
         }
 
         ProductDTO dto = new ProductDTO();
-        dto.setId(product.getId());
-        dto.setName(product.getName());
-        dto.setDescription(product.getDescription());
-        dto.setCategory(product.getCategory());
-        dto.setPrice(product.getPrice());
-        dto.setQuantity(product.getQuantity());
-        dto.setInternalReference(product.getInternalReference());
-        dto.setShellId(product.getShellId());
-        dto.setInventoryStatus(product.getInventoryStatus());
-        dto.setRating(product.getRating());
-        dto.setImage(product.getImage());
+
+        if (product.getId() != null) dto.setId(product.getId());
+        if (product.getName() != null) dto.setName(product.getName());
+        if (product.getDescription() != null) dto.setDescription(product.getDescription());
+        if (product.getCategory() != null) dto.setCategory(product.getCategory());
+        if (product.getPrice() != null) dto.setPrice(product.getPrice());
+        if (product.getQuantity() != null) dto.setQuantity(product.getQuantity());
+        if (product.getInternalReference() != null) dto.setInternalReference(product.getInternalReference());
+        if (product.getShellId() != null) dto.setShellId(product.getShellId());
+        if (product.getInventoryStatus() != null) dto.setInventoryStatus(product.getInventoryStatus());
+        if (product.getRating() != null) dto.setRating(product.getRating());
+        if (product.getImage() != null) dto.setImage(product.getImage());
+
 
 
         return dto;

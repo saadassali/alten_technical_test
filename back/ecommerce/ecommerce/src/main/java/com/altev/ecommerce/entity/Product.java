@@ -25,7 +25,7 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private InventoryStatus inventoryStatus;
 
-    private int rating;
+    private Integer rating;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -48,11 +48,11 @@ public class Product {
         this.createdAt = createdAt;
     }
 
-    public int getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 
@@ -80,19 +80,19 @@ public class Product {
         this.internalReference = internalReference;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

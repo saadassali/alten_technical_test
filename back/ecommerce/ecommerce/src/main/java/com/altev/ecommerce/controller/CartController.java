@@ -1,7 +1,6 @@
 package com.altev.ecommerce.controller;
 
 import com.altev.ecommerce.dto.ProductDTO;
-import com.altev.ecommerce.entity.Product;
 import com.altev.ecommerce.service.impl.CartService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
