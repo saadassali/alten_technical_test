@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import {jwtDecode} from "jwt-decode";
 import {Observable, tap} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {clearWishlist} from "../../wishlist/store/wishlist.actions";
+import {clearCart} from "../../cart/store/cart.actions";
+import {Store} from "@ngrx/store";
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +13,7 @@ import {HttpClient} from "@angular/common/http";
 export class AuthService {
   private apiUrl = 'http://localhost:8080/api/auth/';
 
-  constructor(private http: HttpClient,private router: Router) {}
+  constructor(private http: HttpClient,private router: Router,private store: Store) {}
 
   login(username: string, password: string): Observable<{ token: string }> {
     return this.http.post<{ token: string }>(this.apiUrl + "login", { username, password }).pipe(
@@ -61,6 +64,8 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('accessToken');
-    this.router.navigate(['/auth/signin']);
+    this.store.dispatch(clearCart());
+    this.store.dispatch(clearWishlist());
+    // this.router.navigate(['/auth/signin']);
   }
 }

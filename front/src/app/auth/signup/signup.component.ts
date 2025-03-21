@@ -20,6 +20,18 @@ import {AuthService} from "../core/auth.service";
   standalone: true,
   imports: [DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent, FormsModule, RatingModule, NgClass, SignupFormComponent],
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit{
+  isAuthenticated = false;
 
+  constructor(private authService: AuthService,) {
+  }
+
+  ngOnInit(): void {
+    this.isAuthenticated = this.authService.isAuthenticated()
+  }
+
+  logout() {
+    this.authService.logout();
+    this.isAuthenticated=false;
+  }
 }

@@ -1,2 +1,8 @@
 <h1 class="text-center">Inscription</h1>
-<app-signup-form/>
+@if(isAuthenticated){
+  <div class="flex justify-content-center">
+    <p-button (click)="logout()" type="button"  label="Logout" severity="success" />
+  </div>
+}@else{
+  <app-signup-form/>
+}

@@ -22,3 +22,13 @@ export const removeFromCartFailure = createAction(
   '[Cart] Remove From Cart Failure',
   props<{ error: string }>()
 );
+export const clearCart = createAction('[Cart] Clear Cart');
+export const loadCart = createAction('[Cart] Load Cart');
+export const loadCartSuccess = createAction(
+  '[Cart] Load Cart Success',
+  props<{ cart: Product[] }>()
+);
+export const loadCartFailure = createAction(
+  '[Cart] Load Cart Failure',
+  props<{ error: string }>()
+);

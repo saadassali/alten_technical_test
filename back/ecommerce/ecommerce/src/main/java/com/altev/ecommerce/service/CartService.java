@@ -11,6 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -66,5 +68,17 @@ public class CartService {
 
         cart.getProducts().remove(product);
         cartRepository.save(cart);
+    }
+
+    public List<Product> getProductsFromUserCart() {
+        User user = getAuthenticatedUser();
+        List<Product> products = new ArrayList<>();
+        Optional<Cart> cart = cartRepository.findByUser(user);
+        if(cart.isPresent() && !cart.get().getProducts().isEmpty()){
+            return cart.get().getProducts();
+        }else{
+            return products;
+        }
+
     }
 }

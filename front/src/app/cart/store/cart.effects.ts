@@ -44,6 +44,19 @@ export class CartEffects {
       )
     )
   );
+  loadCart$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CartActions.loadCart),
+      mergeMap(() =>
+        this.cartService.getProductsInCart().pipe(
+          map((cart) => CartActions.loadCartSuccess({ cart })),
+          catchError((error) =>
+            of(CartActions.loadCartFailure({ error: error.message }))
+          )
+        )
+      )
+    )
+  );
 
   constructor(private actions$: Actions, private store: Store,private cartService: CartService) {}
 }

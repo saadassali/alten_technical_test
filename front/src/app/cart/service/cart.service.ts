@@ -1,6 +1,7 @@
 import {inject, Injectable, signal} from "@angular/core";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {catchError, Observable,  throwError} from "rxjs";
+import {catchError, Observable, tap, throwError} from "rxjs";
+import {Product} from "../../shared/models/product.model";
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +22,13 @@ export class CartService {
   }
   removeFromCart(productId: number): Observable<{ message: string }> {
     return this.http.delete<{ message: string }>(`${this.path}/${productId}`);
+  }
+
+  public getProductsInCart(): Observable<Product[]> {
+    return this.http.get<Product[]>(this.path).pipe(
+      catchError((error) => {
+        return this.http.get<Product[]>("assets/products.json");
+      }),
+    );
   }
 }

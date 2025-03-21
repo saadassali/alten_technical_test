@@ -23,3 +23,5 @@ export const removeFromWishlistFailure = createAction(
   '[Wishlist] Remove From Wishlist Failure',
   props<{ error: string }>()
 );
+export const clearWishlist = createAction('[Wishlist] Clear Wishlist');
+

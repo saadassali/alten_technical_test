@@ -18,5 +18,9 @@ export const wishlistReducer = createReducer(
   // Move product to cart (Remove from wishlist)
   on(WishlistActions.moveToCart, (state, { product }) => ({
     wishlist: state.wishlist.filter(item => item.id !== product.id)
+  })),
+  on(WishlistActions.clearWishlist, (state) => ({
+    ...state,
+    items: [] // or your wishlist model reset state
   }))
 );

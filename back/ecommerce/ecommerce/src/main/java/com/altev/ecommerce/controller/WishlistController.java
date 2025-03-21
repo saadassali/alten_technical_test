@@ -1,8 +1,11 @@
 package com.altev.ecommerce.controller;
 
+import com.altev.ecommerce.entity.Product;
 import com.altev.ecommerce.service.WishlistService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/wishlist")
@@ -23,5 +26,9 @@ public class WishlistController {
     public ResponseEntity<String> removeFromCart(@PathVariable Long productId) {
         wishlistService.removeFromWishlist(productId);
         return ResponseEntity.ok("Product removed from wishlist successfully.");
+    }
+    @GetMapping()
+    public List<Product> getProductsFromUserCart() {
+        return wishlistService.getProductsFromUserWishlist();
     }
 }

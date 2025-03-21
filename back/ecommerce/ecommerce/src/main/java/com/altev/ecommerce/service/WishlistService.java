@@ -12,6 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -67,5 +69,15 @@ public class WishlistService {
 
         wishlist.getProducts().remove(product);
         wishlistRepository.save(wishlist);
+    }
+    public List<Product> getProductsFromUserWishlist() {
+        User user = getAuthenticatedUser();
+        List<Product> products = new ArrayList<>();
+        Optional<Wishlist> wishlist = wishlistRepository.findByUser(user);
+        if(wishlist.isPresent() && !wishlist.get().getProducts().isEmpty()){
+            return wishlist.get().getProducts();
+        }else{
+            return products;
+        }
     }
 }

@@ -10,6 +10,7 @@ import {FormsModule} from "@angular/forms";
 import {RatingModule} from "primeng/rating";
 import {NgClass} from "@angular/common";
 import {SigninFormComponent} from "../ui/signin-form/signin-form.component";
+import {AuthService} from "../core/auth.service";
 
 
 
@@ -20,6 +21,21 @@ import {SigninFormComponent} from "../ui/signin-form/signin-form.component";
   standalone: true,
   imports: [DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent, FormsModule, RatingModule, NgClass,SigninFormComponent],
 })
-export class SigninComponent {
+export class SigninComponent implements OnInit {
+  isAuthenticated = false;
+
+  constructor(private authService: AuthService,) {
+  }
+
+  ngOnInit(): void {
+    this.isAuthenticated = this.authService.isAuthenticated()
+    }
+  logout() {
+    console.log("lougout")
+    this.isAuthenticated=false;
+    this.authService.logout()
+
+  }
+
 
 }
