@@ -1,0 +1,53 @@
+<form #contactForm="ngForm" (ngSubmit)="sendContact()">
+  <div class="form-field">
+    <label for="email">Email</label>
+    <input
+      pInputText
+      type="email"
+      id="email"
+      name="email"
+      [(ngModel)]="contact.email"
+      required
+    />
+  </div>
+
+  <div class="form-field">
+    <label for="message">Message</label>
+    <textarea
+      pInputTextarea
+      id="message"
+      name="message"
+      [(ngModel)]="contact.message"
+      required
+      maxlength="300"
+      rows="5"
+    ></textarea>
+  </div>
+
+  <div class="flex justify-content-between">
+    <p-button
+      type="submit"
+      [disabled]="!contactForm.valid"
+      label="Envoyer"
+      severity="success"
+    ></p-button>
+  </div>
+
+  @if (messageTooLong()) {
+    <p class="text-red-500 mt-2">
+      Le message ne doit pas dépasser 300 caractères.
+    </p>
+  }
+
+  <p *ngIf="successMessage" class="text-green-500 mt-2">
+    {{ successMessage }}
+  </p>
+  <p *ngIf="errorMessage" class="text-red-500 mt-2">
+    {{ errorMessage }}
+  </p>
+</form>
+<p-dialog [(visible)]="isDialogVisible"
+          [style]="{ width: '50vw' }"
+          header="Demande de contact envoyée avec succès">
+
+</p-dialog>
