@@ -27,22 +27,17 @@ import { MenuItem } from "primeng/api";
         },
       {
         label: 'SignIn',
-        icon: 'pi pi-barcode',
+        icon: 'pi pi-sign-in',
         routerLink: ['/auth/signin']
       },
       {
         label: 'SignUp',
-        icon: 'pi pi-barcode',
+        icon: 'pi pi-sign-in',
         routerLink: ['/auth/signup']
       },
       {
-        label: 'WishList',
-        icon: 'pi pi-barcode',
-        routerLink: ['/wishlist']
-      },
-      {
         label: 'Contact',
-        icon: 'pi pi-barcode',
+        icon: 'pi pi-user',
         routerLink: ['/contact']
       }
     ]

@@ -13,7 +13,7 @@ import {AuthService} from "../../core/auth.service";
 @Component({
   selector: "app-signup-form",
   template: `
-    <form #form="ngForm" (ngSubmit)="onSignup()">
+    <form #form="ngForm" (ngSubmit)="onSignup()" class="form-container">
       <div class="form-field">
         <label for="username">Username</label>
         <input

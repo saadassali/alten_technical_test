@@ -14,7 +14,7 @@ import {NgIf} from "@angular/common";
 @Component({
   selector: "app-signin-form",
   template: `
-    <form #form="ngForm" (ngSubmit)="onSignIn()">
+    <form #form="ngForm" (ngSubmit)="onSignIn()" class="form-container">
       <div class="form-field">
         <label for="username">Username</label>
         <input
@@ -34,6 +34,7 @@ import {NgIf} from "@angular/common";
           name="password"
           id="password"
           [toggleMask]="true"
+          [feedback]="false"
           required
         />
       </div>
