@@ -2,12 +2,35 @@
 
 <p-button label="Créer produit" (onClick)="onCreate()" class="block text-center"/>
 
-<p-dataView #dv [value]="products()">
+<p-dataView #dv
+            [value]="products().content"
+            [paginator]="true"
+            [rows]="rows"
+            [totalRecords]="totalRecords()"
+            [lazy]="true"
+            (onPage)="onPageChange($event)"
+>
+<!--  <div class="form-field">-->
+<!--    <label for="description">Catégorie</label>-->
+<!--    <p-dropdown-->
+<!--      [options]="categories"-->
+<!--      [(ngModel)]="category"-->
+<!--      name="category"-->
+<!--      appendTo="body"-->
+<!--    />-->
+<!--  </div>-->
+<!--  <p-dropdown-->
+<!--    [options]="categories"-->
+<!--    [(ngModel)]="category"-->
+<!--    (onChange)="loadProducts()"-->
+<!--    name="category"-->
+<!--    appendTo="body"-->
+<!--  />-->
     <ng-template pTemplate="list" let-products>
         @for (product of products; track product) {
-<!--          <app-product-item [product]="product" (onUpdate)="onUpdate($event)"-->
-<!--                            (onDelete)="onDelete($event)"></app-product-item>-->
+
           <app-custom-product-item [product]="product" (onUpdate)="onUpdate($event)"(onDelete)="onDelete($event)"/>
+                 {{product.id}}
                   }
               </ng-template>
           </p-dataView>

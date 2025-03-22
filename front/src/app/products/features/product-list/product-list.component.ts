@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from "@angular/core";
+import {Component, OnInit, inject, signal, computed} from "@angular/core";
 import { Product } from "app/shared/models/product.model";
 import { ProductsService } from "app/products/data-access/products.service";
 import { ProductFormComponent } from "app/products/ui/product-form/product-form.component";
@@ -9,10 +9,8 @@ import { DialogModule } from 'primeng/dialog';
 import {FormsModule} from "@angular/forms";
 import {RatingModule} from "primeng/rating";
 import {NgClass} from "@angular/common";
-import * as WishlistActions from "../../../wishlist/store/wishlist.actions";
-import * as CartActions from "../../../cart/store/cart.actions";
-import {Store} from "@ngrx/store";
 import {ProductItemComponent} from "../../../shared/ui/product-item/product-item.component";
+import {DropdownModule} from "primeng/dropdown";
 
 const emptyProduct: Product = {
   id: 0,
@@ -36,13 +34,18 @@ const emptyProduct: Product = {
   templateUrl: "./product-list.component.html",
   styleUrls: ["./product-list.component.scss"],
   standalone: true,
-  imports: [DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent, FormsModule, RatingModule, NgClass, ProductItemComponent],
+  imports: [DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent, FormsModule, RatingModule, NgClass, ProductItemComponent, DropdownModule],
 })
 export class ProductListComponent implements OnInit {
 
   private readonly productsService = inject(ProductsService);
+  private category: string = '';
 
   public readonly products = this.productsService.products;
+  public readonly totalRecords = computed(() => this.products().totalElements);
+
+  public rows = 10;
+  public currentPage = 0;
 
   public isDialogVisible = false;
   public isCreation = false;
@@ -50,7 +53,25 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit() {
     this.productsService.get().subscribe();
+    this.loadProducts();
   }
+  public onCategoryChange(event: any) {
+    this.currentPage = event.first / event.rows;;
+    this.loadProducts();
+  }
+  public onPageChange(event: any) {
+    this.currentPage = event.first / event.rows;;
+    this.rows = event.rows;
+    this.loadProducts();
+  }
+  private loadProducts() {
+    let url = `?page=${this.currentPage}&size=${this.rows}`;
+    if (this.category.length) {
+      url += `&category=${this.category}`;
+    }
+    this.productsService.getPaginated(url).subscribe();
+  }
+
 
   public onCreate() {
     this.isCreation = true;
@@ -65,15 +86,17 @@ export class ProductListComponent implements OnInit {
   }
 
   public onDelete(product: Product) {
-    this.productsService.delete(product.id).subscribe();
+    this.productsService.delete(product.id).subscribe(() => {
+      this.loadProducts();
+    });
   }
 
   public onSave(product: Product) {
-    if (this.isCreation) {
-      this.productsService.create(product).subscribe();
-    } else {
-      this.productsService.update(product).subscribe();
-    }
+    const action = this.isCreation
+      ? this.productsService.create(product)
+      : this.productsService.update(product);
+
+    action.subscribe(() => this.loadProducts());
     this.closeDialog();
   }
 
