@@ -31,9 +31,7 @@ export class WishlistComponent {
   wishlistCount$ = this.store.select(selectWishlistCount);
 
   moveToCart(product: Product) {
-    // Dispatch move to cart action
     this.store.dispatch(WishlistActions.moveToCart({ product }));
-    // Dispatch add to cart action
     this.store.dispatch(CartActions.addToCart({ product }));
   }
 

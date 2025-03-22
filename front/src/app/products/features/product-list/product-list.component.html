@@ -1,46 +1,50 @@
 <h1 class="text-center">Liste des produits</h1>
 
-<p-button label="Créer produit" (onClick)="onCreate()" class="block text-center"/>
+<p-button label="Créer produit" (onClick)="onCreate()" class="block text-center" />
 
-<p-dataView #dv
-            [value]="products().content"
-            [paginator]="true"
-            [rows]="rows"
-            [totalRecords]="totalRecords()"
-            [lazy]="true"
-            (onPage)="onPageChange($event)"
+<p-dataView
+  #dv
+  [value]="products().content"
+  [paginator]="true"
+  [rows]="rows"
+  [totalRecords]="totalRecords()"
+  [lazy]="true"
+  (onPage)="onPageChange($event)"
 >
-<!--  <div class="form-field">-->
-<!--    <label for="description">Catégorie</label>-->
-<!--    <p-dropdown-->
-<!--      [options]="categories"-->
-<!--      [(ngModel)]="category"-->
-<!--      name="category"-->
-<!--      appendTo="body"-->
-<!--    />-->
-<!--  </div>-->
-<!--  <p-dropdown-->
-<!--    [options]="categories"-->
-<!--    [(ngModel)]="category"-->
-<!--    (onChange)="loadProducts()"-->
-<!--    name="category"-->
-<!--    appendTo="body"-->
-<!--  />-->
-    <ng-template pTemplate="list" let-products>
-        @for (product of products; track product) {
+  <ng-template pTemplate="header">
+    <div class="form-field flex align-items-center gap-2">
+      <label for="category">Catégorie</label>
+      <p-dropdown
+        [options]="categories"
+        [(ngModel)]="category"
+        (onChange)="onCategoryChange($event)"
+        placeholder="Choisir une catégorie"
+        appendTo="body"
+      />
+    </div>
+  </ng-template>
 
-          <app-custom-product-item [product]="product" (onUpdate)="onUpdate($event)"(onDelete)="onDelete($event)"/>
-                 {{product.id}}
-                  }
-              </ng-template>
-          </p-dataView>
+  <!-- ✅ List Template: Product items -->
+  <ng-template pTemplate="list" let-products>
+    @for (product of products; track product) {
+      <app-custom-product-item
+        [product]="product"
+        (onUpdate)="onUpdate($event)"
+        (onDelete)="onDelete($event)"
+      />
+    }
+  </ng-template>
+</p-dataView>
 
-          <p-dialog [(visible)]="isDialogVisible"
-              [style]="{ width: '50vw' }"
-              header="Ajout/Edition produit">
-              <app-product-form
-                  [product]="editedProduct()"
-                  (save)="onSave($event)"
-                  (cancel)="onCancel()"
-              />
-          </p-dialog>
+<!-- ✅ Dialog for create/edit -->
+<p-dialog
+  [(visible)]="isDialogVisible"
+  [style]="{ width: '50vw' }"
+  header="Ajout/Edition produit"
+>
+  <app-product-form
+    [product]="editedProduct()"
+    (save)="onSave($event)"
+    (cancel)="onCancel()"
+  />
+</p-dialog>

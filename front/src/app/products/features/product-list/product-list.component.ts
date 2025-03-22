@@ -11,6 +11,7 @@ import {RatingModule} from "primeng/rating";
 import {NgClass} from "@angular/common";
 import {ProductItemComponent} from "../../../shared/ui/product-item/product-item.component";
 import {DropdownModule} from "primeng/dropdown";
+import {SelectItem} from "primeng/api";
 
 const emptyProduct: Product = {
   id: 0,
@@ -37,9 +38,15 @@ const emptyProduct: Product = {
   imports: [DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent, FormsModule, RatingModule, NgClass, ProductItemComponent, DropdownModule],
 })
 export class ProductListComponent implements OnInit {
-
+  // public readonly categories =["","Accessories","Fitness","Clothing","Electronics"]
+  public readonly categories: SelectItem[] = [
+    { value: "Accessories", label: "Accessories" },
+    { value: "Fitness", label: "Fitness" },
+    { value: "Clothing", label: "Clothing" },
+    { value: "Electronics", label: "Electronics" },
+  ];
   private readonly productsService = inject(ProductsService);
-  private category: string = '';
+  category: string = '';
 
   public readonly products = this.productsService.products;
   public readonly totalRecords = computed(() => this.products().totalElements);
@@ -56,7 +63,6 @@ export class ProductListComponent implements OnInit {
     this.loadProducts();
   }
   public onCategoryChange(event: any) {
-    this.currentPage = event.first / event.rows;;
     this.loadProducts();
   }
   public onPageChange(event: any) {
