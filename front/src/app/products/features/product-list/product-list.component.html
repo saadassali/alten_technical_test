@@ -24,7 +24,6 @@
     </div>
   </ng-template>
 
-  <!-- ✅ List Template: Product items -->
   <ng-template pTemplate="list" let-products>
     @for (product of products; track product) {
       <app-custom-product-item
@@ -32,6 +31,7 @@
         (onUpdate)="onUpdate($event)"
         (onDelete)="onDelete($event)"
       />
+      {{product.id}}
     }
   </ng-template>
 </p-dataView>

@@ -37,7 +37,7 @@ import {PaginatedResponse} from "../../shared/models/paginated.rsponse.model";
     }
 
     public update(product: Product): Observable<boolean> {
-        return this.http.patch<boolean>(`${this.path}/${product.id}`, product).pipe(
+        return this.http.patch<boolean>(`${this.path}`, product).pipe(
             catchError(() => {
                 return of(true);
             }),
