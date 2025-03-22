@@ -8,6 +8,9 @@ import com.altev.ecommerce.exception.ProductNotFoundException;
 import com.altev.ecommerce.mappers.ProductMapper;
 import com.altev.ecommerce.service.IProductService;
 import org.apache.coyote.BadRequestException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -27,9 +30,19 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public Page<ProductDTO> getProducts(String category, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        if (category == null || category.isEmpty()) {
+            return productRepository.findAll(pageable).map(ProductMapper::entityToDto);
+        } else {
+            return productRepository.findByCategory(category, pageable).map(ProductMapper::entityToDto);
+        }
+    }
+    @Override
     public List<ProductDTO> getAllProducts() {
         return productRepository.findAll().stream().map(ProductMapper::entityToDto).collect(Collectors.toList());
     }
+
 
     @Override
     public ProductDTO getProductById(Long id) {

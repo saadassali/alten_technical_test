@@ -2,12 +2,11 @@ package com.altev.ecommerce.controller;
 
 import com.altev.ecommerce.annotations.RequireAdmin;
 import com.altev.ecommerce.dto.ProductDTO;
-import com.altev.ecommerce.entity.Product;
 import com.altev.ecommerce.service.impl.ProductService;
 import org.apache.coyote.BadRequestException;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/products")
@@ -19,8 +18,10 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<ProductDTO> getAllProducts() {
-        return productService.getAllProducts();
+    public Page<ProductDTO> getAllProducts(@RequestParam(required = false) String category,
+                                           @RequestParam(defaultValue = "0") int page,
+                                           @RequestParam(defaultValue = "10") int size) {
+        return productService.getProducts(category,page,size);
     }
 
     @GetMapping("/{id}")
