@@ -1,7 +1,7 @@
 package com.altev.ecommerce.controller;
 
 import com.altev.ecommerce.dto.ProductDTO;
-import com.altev.ecommerce.entity.Product;
+import com.altev.ecommerce.service.IWishlistService;
 import com.altev.ecommerce.service.impl.WishlistService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/wishlist")
 public class WishlistController {
-    private final WishlistService wishlistService;
+    private final IWishlistService wishlistService;
 
     public WishlistController(WishlistService wishlistService) {
         this.wishlistService = wishlistService;

@@ -2,6 +2,7 @@ package com.altev.ecommerce.controller;
 
 import com.altev.ecommerce.annotations.RequireAdmin;
 import com.altev.ecommerce.dto.ProductDTO;
+import com.altev.ecommerce.service.IProductService;
 import com.altev.ecommerce.service.impl.ProductService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-    private final ProductService productService;
+    private final IProductService productService;
 
     public ProductController(ProductService productService) {
         this.productService = productService;

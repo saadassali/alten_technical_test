@@ -3,6 +3,7 @@ package com.altev.ecommerce.controller;
 import com.altev.ecommerce.dto.JwtResponse;
 import com.altev.ecommerce.dto.LoginRequest;
 import com.altev.ecommerce.dto.SignupRequest;
+import com.altev.ecommerce.service.IAuthService;
 import com.altev.ecommerce.service.impl.AuthService;
 import com.altev.ecommerce.service.impl.JwtTokenService;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ public class AuthController {
 
     private final AuthenticationManager authManager;
     private final JwtTokenService jwtTokenService;
-    private final AuthService authService;
+    private final IAuthService authService;
 
     public AuthController(AuthenticationManager authManager, JwtTokenService jwtTokenService, AuthService authService) {
         this.authManager = authManager;

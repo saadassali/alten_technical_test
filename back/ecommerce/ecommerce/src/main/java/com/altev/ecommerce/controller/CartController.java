@@ -1,6 +1,7 @@
 package com.altev.ecommerce.controller;
 
 import com.altev.ecommerce.dto.ProductDTO;
+import com.altev.ecommerce.service.ICartService;
 import com.altev.ecommerce.service.impl.CartService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/cart")
 public class CartController {
-    private final CartService cartService;
+    private final ICartService cartService;
 
     public CartController(CartService cartService) {
         this.cartService = cartService;
