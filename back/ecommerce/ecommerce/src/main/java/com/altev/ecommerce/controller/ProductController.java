@@ -8,6 +8,8 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/products")
@@ -34,6 +36,12 @@ public class ProductController {
     @RequireAdmin
     public ProductDTO createProduct(@RequestBody ProductDTO product) {
         return productService.saveProduct(product);
+    }
+
+    @PostMapping("/all")
+    @RequireAdmin
+    public List<ProductDTO> createAllProduct(@RequestBody List<ProductDTO> products) {
+        return productService.saveAllProduct(products);
     }
 
     @PatchMapping

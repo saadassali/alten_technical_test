@@ -18,4 +18,6 @@ public interface IProductService {
     List<ProductDTO> getAllProducts();
 
     void deleteProduct(Long id);
+
+    List<ProductDTO> saveAllProduct(List<ProductDTO> products);
 }

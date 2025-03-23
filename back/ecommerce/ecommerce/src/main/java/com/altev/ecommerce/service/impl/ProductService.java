@@ -98,4 +98,10 @@ public class ProductService implements IProductService {
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
     }
+
+    @Override
+    public List<ProductDTO> saveAllProduct(List<ProductDTO> products) {
+        List<Product> productList = products.stream().map(ProductMapper::dtoToEntity).toList();
+        return productRepository.saveAll(productList).stream().map(ProductMapper::entityToDto).toList();
+    }
 }
