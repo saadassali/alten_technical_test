@@ -4,8 +4,10 @@ import com.altev.ecommerce.dto.CustomError;
 import com.altev.ecommerce.exception.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+@ControllerAdvice
 public class CustomExceptionHandler {
 
     @ExceptionHandler(ProductNotFoundException.class)
@@ -13,6 +15,7 @@ public class CustomExceptionHandler {
         CustomError error = new CustomError(e.getMessage(), 1);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
+
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<CustomError> handleProductRuntimeException(RuntimeException e) {
         CustomError error = new CustomError(e.getMessage(), 10);

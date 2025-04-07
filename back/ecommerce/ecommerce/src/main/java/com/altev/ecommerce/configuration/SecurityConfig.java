@@ -13,7 +13,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 public class SecurityConfig {
 
-    private final JwtRequestFilter jwtRequestFilter; // our JWT filter (defined below)
+    private final JwtRequestFilter jwtRequestFilter;
 
     public SecurityConfig(JwtRequestFilter jwtRequestFilter) {
         this.jwtRequestFilter = jwtRequestFilter;
@@ -30,9 +30,9 @@ public class SecurityConfig {
                    .sessionManagement(sess -> 
                        sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                    )
-                   .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class) // add JWT filter
+                   .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                    .build();
     }
 
-    // ... AuthenticationManager and PasswordEncoder beans (see below)
+
 }

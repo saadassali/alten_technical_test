@@ -23,25 +23,23 @@ public class AuthService implements IAuthService {
     @Override
     public String registerUser(SignupRequest request) {
         // Check if email or username already exists
-        if (userRepository.existsByEmail(request.getEmail())) {
+        if (userRepository.existsByEmail(request.email())) {
             throw new RuntimeException("Email already taken!");
         }
 
         // Create new user with encrypted password
         User user = new User();
-        user.setEmail(request.getEmail());
-        user.setUsername(request.getUsername());
-        user.setFirstname(request.getFirstname());
-        user.setPassword(passwordEncoder.encode(request.getPassword())); // Encrypt password
-        if(request.getEmail().equals("admin@admin.com")){
+        user.setEmail(request.email());
+        user.setUsername(request.username());
+        user.setFirstname(request.firstname());
+        user.setPassword(passwordEncoder.encode(request.password()));
+        if(request.email().equals("admin@admin.com")){
             user.setIsAdmin(true);
         }else{
             user.setIsAdmin(false);
         }
-        // Save user to database
         userRepository.save(user);
 
-        // Generate JWT token for the new user
         return jwtTokenService.generateToken(user);
     }
 }

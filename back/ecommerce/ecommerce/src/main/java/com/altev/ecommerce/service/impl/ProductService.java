@@ -4,6 +4,7 @@ import com.altev.ecommerce.dao.ProductRepository;
 import com.altev.ecommerce.dao.UserRepository;
 import com.altev.ecommerce.dto.ProductDTO;
 import com.altev.ecommerce.entity.Product;
+import com.altev.ecommerce.entity.enums.InventoryStatus;
 import com.altev.ecommerce.exception.ProductNotFoundException;
 import com.altev.ecommerce.mappers.ProductMapper;
 import com.altev.ecommerce.service.IProductService;
@@ -59,11 +60,11 @@ public class ProductService implements IProductService {
 
     @Override
     public ProductDTO updateProduct(@RequestBody ProductDTO productDTO) throws BadRequestException {
-        if (productDTO.getId() == null) {
+        if (productDTO.id() == null) {
            throw new BadRequestException("Product id is required");
         }
 
-        Optional<Product> optionalProduct = productRepository.findById(productDTO.getId());
+        Optional<Product> optionalProduct = productRepository.findById(productDTO.id());
 
         if (optionalProduct.isEmpty()) {
             throw new ProductNotFoundException("Product not found");
@@ -71,20 +72,19 @@ public class ProductService implements IProductService {
 
         Product existingProduct = optionalProduct.get();
 
-        // Apply only non-null updates
-        if (productDTO.getCode() != null) existingProduct.setCode(productDTO.getCode());
-        if (productDTO.getName() != null) existingProduct.setName(productDTO.getName());
-        if (productDTO.getDescription() != null) existingProduct.setDescription(productDTO.getDescription());
-        if (productDTO.getImage() != null) existingProduct.setImage(productDTO.getImage());
-        if (productDTO.getCategory() != null) existingProduct.setCategory(productDTO.getCategory());
-        if (productDTO.getPrice() != null) existingProduct.setPrice(productDTO.getPrice());
-        if (productDTO.getQuantity() != null) existingProduct.setQuantity(productDTO.getQuantity());
-        if (productDTO.getInternalReference() != null)
-            existingProduct.setInternalReference(productDTO.getInternalReference());
-        if (productDTO.getShellId() != null) existingProduct.setShellId(productDTO.getShellId());
-        if (productDTO.getInventoryStatus() != null)
-            existingProduct.setInventoryStatus(productDTO.getInventoryStatus());
-        if (productDTO.getRating() != null) existingProduct.setRating(productDTO.getRating());
+        if (productDTO.code() != null) existingProduct.setCode(productDTO.code());
+        if (productDTO.name() != null) existingProduct.setName(productDTO.name());
+        if (productDTO.description() != null) existingProduct.setDescription(productDTO.description());
+        if (productDTO.image() != null) existingProduct.setImage(productDTO.image());
+        if (productDTO.category() != null) existingProduct.setCategory(productDTO.category());
+        if (productDTO.price() != null) existingProduct.setPrice(productDTO.price());
+        if (productDTO.quantity() != null) existingProduct.setQuantity(productDTO.quantity());
+        if (productDTO.internalReference() != null)
+            existingProduct.setInternalReference(productDTO.internalReference());
+        if (productDTO.shellId() != null) existingProduct.setShellId(productDTO.shellId());
+        if (productDTO.inventoryStatus() != null)
+            existingProduct.setInventoryStatus(productDTO.inventoryStatus());
+        if (productDTO.rating() != null) existingProduct.setRating(productDTO.rating());
 
         existingProduct.setUpdatedAt(LocalDateTime.now()); // Update the timestamp
 

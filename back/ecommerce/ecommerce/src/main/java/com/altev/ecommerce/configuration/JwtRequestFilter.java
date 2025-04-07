@@ -36,17 +36,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             String token = authHeader.substring(7);
             String username = jwtTokenService.validateTokenAndGetUsername(token);
             if (username != null) {
-                // Token is valid, load user details from DB
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                // Create authentication token
                 UsernamePasswordAuthenticationToken auth =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                // Set user in Spring Security context
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         }
-        // continue filter chain
         chain.doFilter(request, response);
     }
 }
