@@ -28,7 +28,7 @@ public class CartController {
         return ResponseEntity.ok("Product removed from cart successfully.");
     }
     @GetMapping()
-    public List<ProductDTO> getProductsFromUserCart() {
-        return cartService.getProductsFromUserCart();
+    public ResponseEntity<List<ProductDTO>> getProductsFromUserCart() {
+        return ResponseEntity.ok().body(cartService.getProductsFromUserCart());
     }
 }

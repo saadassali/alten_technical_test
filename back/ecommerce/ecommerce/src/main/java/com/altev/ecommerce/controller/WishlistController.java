@@ -29,7 +29,7 @@ public class WishlistController {
         return ResponseEntity.ok("Product removed from wishlist successfully.");
     }
     @GetMapping()
-    public List<ProductDTO> getProductsFromUserCart() {
-        return wishlistService.getProductsFromUserWishlist();
+    public ResponseEntity<List<ProductDTO>> getProductsFromUserCart() {
+        return ResponseEntity.ok().body(wishlistService.getProductsFromUserWishlist());
     }
 }

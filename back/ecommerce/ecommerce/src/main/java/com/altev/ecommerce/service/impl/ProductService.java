@@ -23,11 +23,9 @@ import java.util.stream.Collectors;
 @Service
 public class ProductService implements IProductService {
     private final ProductRepository productRepository;
-    private final UserRepository userRepository;
 
-    public ProductService(ProductRepository productRepository, UserRepository userRepository) {
+    public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
-        this.userRepository = userRepository;
     }
 
     @Override
@@ -86,9 +84,9 @@ public class ProductService implements IProductService {
             existingProduct.setInventoryStatus(productDTO.inventoryStatus());
         if (productDTO.rating() != null) existingProduct.setRating(productDTO.rating());
 
-        existingProduct.setUpdatedAt(LocalDateTime.now()); // Update the timestamp
+        existingProduct.setUpdatedAt(LocalDateTime.now());
 
-        Product updatedProduct = productRepository.save(existingProduct); // Save updated product
+        Product updatedProduct = productRepository.save(existingProduct);
 
         return ProductMapper.entityToDto(updatedProduct);
 
