@@ -16,7 +16,7 @@ import java.util.Date;
 
 @Service
 public class JwtTokenService {
-    // Use a strong secret (at least 512 bits for HS512)
+
     @Value("${jwt.secret}")
     private String secret;
     @Value("${jwt.secret.validation.duration}")
@@ -26,7 +26,6 @@ public class JwtTokenService {
     
     @PostConstruct
     public void init() {
-        // Initialize the signing algorithm and verifier once
         jwtAlgorithm = Algorithm.HMAC512(secret);
         jwtVerifier = JWT.require(jwtAlgorithm).withIssuer("altenApp").build();
     }

@@ -22,12 +22,10 @@ public class AuthService implements IAuthService {
 
     @Override
     public String registerUser(SignupRequest request) {
-        // Check if email or username already exists
         if (userRepository.existsByEmail(request.email())) {
             throw new RuntimeException("Email already taken!");
         }
 
-        // Create new user with encrypted password
         User user = new User();
         user.setEmail(request.email());
         user.setUsername(request.username());
